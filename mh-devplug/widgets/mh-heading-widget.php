@@ -50,6 +50,26 @@ class MH_Heading_Widget extends \Elementor\Widget_Base {
                 'label_block' => true,
             ]
         );
+        $this->add_control(
+            'heading_html_tag',
+            [
+                'label' => __( 'HTML Tag', 'mhds-plug' ),
+                'type' => Controls_Manager::SELECT,
+                'options' => [
+                    'h1' => 'H1',
+                    'h2' => 'H2',
+                    'h3' => 'H3',
+                    'h4' => 'H4',
+                    'h5' => 'H5',
+                    'h6' => 'H6',
+                    'p' => 'P',
+                    'div' => 'DIV',
+                ],
+                'default' => 'h2',
+                'description' => __( 'Select the HTML tag for Heading.', 'mhds-plug' ),
+            ]
+        );
+    
         $this->end_controls_section();
 
         // Style section
@@ -69,7 +89,7 @@ class MH_Heading_Widget extends \Elementor\Widget_Base {
                 'type' => Controls_Manager::COLOR,
                 'default' => '#000000',
                 'selectors' => [
-                    '{{WRAPPER}} h2' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .mh-plug-heading-widget' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -80,7 +100,7 @@ class MH_Heading_Widget extends \Elementor\Widget_Base {
             [
                 'name' => 'heading_typography',
                 'label' => __('Typography', 'mhds-plug'),
-                'selector' => '{{WRAPPER}} h2',
+                'selector' => '{{WRAPPER}} .mh-plug-heading-widget',
             ]
         );
 
@@ -90,7 +110,7 @@ class MH_Heading_Widget extends \Elementor\Widget_Base {
             [
                 'name' => 'heading_text_shadow',
                 'label' => __('Text Shadow', 'mhds-plug'),
-                'selector' => '{{WRAPPER}} h2',
+                'selector' => '{{WRAPPER}} .mh-plug-heading-widget'
             ]
         );
 
@@ -102,18 +122,87 @@ class MH_Heading_Widget extends \Elementor\Widget_Base {
                 'type' => Controls_Manager::COLOR,
                 'default' => '#f0f0f0',
                 'selectors' => [
-                    '{{WRAPPER}} h2' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} .mh-plug-heading-widget' => 'background-color: {{VALUE}};',
                 ],
             ]
         );
+        $this->add_responsive_control(
+            'mh-heading-alignment',
+            [
+                'label' => __( 'Alignment', 'mhds-plug' ),
+                'type' => Controls_Manager::CHOOSE,
+                'options' => [
+                    'left' => [
+                        'title' => __( 'Left', 'mhds-plug' ),
+                        'icon' => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => __( 'Center', 'mhds-plug' ),
+                        'icon' => 'eicon-text-align-center',
+                    ],
+                    'right' => [
+                        'title' => __( 'Right', 'mhds-plug' ),
+                        'icon' => 'eicon-text-align-right',
+                    ],
+                    
+                ],
+                'default' => 'left',
+                'selectors' => [
+                    '{{WRAPPER}} .mh-plug-heading-widget' => 'text-align: {{VALUE}};',
+                ],
+            ]
+        );
+        
+        $this->add_responsive_control(
+            'mh-heading-padding',
+            [
+                'label' => __( 'Padding', 'mhds-plug' ),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => [ 'px', '%', 'em' ],
+                'default' => [
+                    'top' => '20',
+                    'right' => '20',
+                    'bottom' => '20',
+                    'left' => '20',
+                    'unit' => 'px', // You can set the default unit you prefer (px, %, em, etc.)
+                    'isLinked' => false,
+                ],
+    
+                'selectors' => [
+                    '{{WRAPPER}} .mh-plug-heading-widget' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};', // Adjust the selector to target your widget's elements
+                ],
+            ]
+        );
+        // Padding Control
+        $this->add_responsive_control(
+            'mh-heading-margin',
+            [
+                'label' => __( 'Margin', 'mhds-plug' ),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => [ 'px', '%', 'em' ],
+                'default' => [
+                    'top' => '20',
+                    'right' => '20',
+                    'bottom' => '20',
+                    'left' => '20',
+                    'unit' => 'px', // You can set the default unit you prefer (px, %, em, etc.)
+                    'isLinked' => false,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .mh-plug-heading-widget' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};', // Adjust the selector to target your widget's elements
+                ],
+            ]
+        );
+    
+    
 
         $this->end_controls_section();
     }
 
-    protected function render() {
+protected function render() {
         $settings = $this->get_settings_for_display();
-
-        echo '<h2>' . esc_html($settings['heading_text']) . '</h2>';
+        $headingtag = !empty($settings['heading_html_tag']) ? $settings['heading_html_tag'] : 'h2'; 
+        echo '<'. esc_attr( $headingtag ).' class="mh-plug-heading-widget" >' . esc_html($settings['heading_text']) . '</'. esc_attr( $headingtag ) .'>';
     }
 
     

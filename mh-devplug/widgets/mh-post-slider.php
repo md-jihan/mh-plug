@@ -303,7 +303,7 @@ class MH_Post_Slider_Widget extends Widget_Base {
                 'type' => Controls_Manager::COLOR,
                 'default' => '#666',
                 'selectors' => [
-                    '{{WRAPPER}} .slick-slider .mh-slider-item' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} .slick-slider .mh-slider-item-body' => 'background-color: {{VALUE}};',
                 ],
             ]
         );
@@ -343,7 +343,7 @@ class MH_Post_Slider_Widget extends Widget_Base {
                 ],
     
                 'selectors' => [
-                    '{{WRAPPER}} .slick-slider .mh-slider-item' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};', // Adjust the selector to target your widget's elements
+                    '{{WRAPPER}} .slick-slider .mh-slider-item-body' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};', // Adjust the selector to target your widget's elements
                 ],
             ]
         );
@@ -352,7 +352,7 @@ class MH_Post_Slider_Widget extends Widget_Base {
             [
                 'name' => 'post_slider_shadow',
                 'label' => __('Box Shadow', 'mhds-plug'),
-                'selector' => '{{WRAPPER}} .slick-slider .mh-slider-item',
+                'selector' => '{{WRAPPER}} .slick-slider .mh-slider-item-body',
             ]
         );
     
@@ -379,9 +379,12 @@ class MH_Post_Slider_Widget extends Widget_Base {
             ?>
 <div class="mh-post-slider">
     <?php while ($query->have_posts()) : $query->the_post(); ?>
+
     <div class="mh-slider-item">
+        <div class="mh-slider-item-body">
         <h3 class="mh-slider-title"><?php the_title(); ?></h3>
         <p class="mh-slider-excerpt"><?php echo wp_trim_words(get_the_excerpt(), $excerpt_length); ?></p>
+    </div>
     </div>
     <?php endwhile; ?>
 </div>
@@ -391,7 +394,7 @@ class MH_Post_Slider_Widget extends Widget_Base {
     
     color: <?php echo $settings['navarrow_color'];?>;
 }
-.slick-slider .mh-slider-item{
+.slick-slider .mh-slider-item-body{
     padding: 15px;
 }
 .slick-dots li button:before{

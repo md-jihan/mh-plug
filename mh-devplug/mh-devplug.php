@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: MH Plug
- * Plugin URI: https://yourwebsite.com
- * Description: A custom Elementor addon with a heading widget.
+ * Plugin URI: https://mhdevstudio.com
+ * Description: MH-Plug is a lightweight Elementor addon featuring a sleek, customizable post slider powered by Slick Slider.
  * Version: 1.0
- * Author: Your Name
- * Author URI: https://yourwebsite.com
+ * Author: MH-DevStudio
+ * Author URI: https://mhdevstudio.com
  * License: GPL2
  * Text Domain: mhds-plug
  */
@@ -30,8 +30,11 @@ add_action('plugins_loaded', 'mh_plug_check_elementor');
 function mh_plug_register_widgets($widgets_manager) {
     require_once plugin_dir_path(__FILE__) . 'widgets/mh-heading-widget.php';  // Make sure this file exists
     require_once plugin_dir_path(__FILE__) . 'widgets/mh-post-slider.php';
+    require_once plugin_dir_path(__FILE__) . 'widgets/mh-button-widget.php';
+    $widgets_manager->register(new MH_Button_Widget());
     $widgets_manager->register(new MH_Heading_Widget());
     $widgets_manager->register(new MH_Post_Slider_Widget());
+
 }
 
 // Optional: Create widgets folder if doesn't exist (but don’t create the widget file programmatically)
