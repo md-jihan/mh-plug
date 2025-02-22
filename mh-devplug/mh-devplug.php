@@ -31,8 +31,10 @@ function mh_plug_register_widgets($widgets_manager) {
     require_once plugin_dir_path(__FILE__) . 'widgets/mh-heading-widget.php';  // Make sure this file exists
     require_once plugin_dir_path(__FILE__) . 'widgets/mh-post-slider.php';
     require_once plugin_dir_path(__FILE__) . 'widgets/mh-button-widget.php';
+    require_once plugin_dir_path(__FILE__) . 'widgets/mh-testimonials-widget.php';
     $widgets_manager->register(new MH_Button_Widget());
     $widgets_manager->register(new MH_Heading_Widget());
+    $widgets_manager->register(new MH_Testimonials_Widget());
     $widgets_manager->register(new MH_Post_Slider_Widget());
 
 }
@@ -66,6 +68,8 @@ function mh_enqueue_slick_slider() {
     wp_enqueue_style('slick-css', plugin_dir_url(__FILE__) . 'assets/slick.css',[], '1.0.0');
     wp_enqueue_style('slick-theme-css', plugin_dir_url(__FILE__).'assets/slick-theme.css', [], '1.0.0');
     wp_enqueue_script('slick-js', plugin_dir_url(__FILE__).'assets/slick.min.js', array('jquery'), '1.8.1', true);
+    wp_enqueue_style('elementor-icons', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css', [], '6.4.2');
+
 }
 add_action('wp_enqueue_scripts', 'mh_enqueue_slick_slider');
 

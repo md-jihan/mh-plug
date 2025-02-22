@@ -217,9 +217,25 @@ class MH_Post_Slider_Widget extends Widget_Base {
                 'label' => __('Navigation Arrow Color', 'mhds-plug'),
                 'type' => Controls_Manager::COLOR,
                 'default' => '#000',
-                
+                'selectors' => [
+                    '{{WRAPPER}} .mh-post-slider .slick-prev::before,{{WRAPPER}}  .mh-post-slider .slick-next::before' => 'color: {{value}}'
+                ],
             ]
         );
+        $this->add_control(
+			'navarrow_size',
+			[
+				'label' => esc_html__( 'Arrow Size', 'mhds-plug' ),
+				'type' => Controls_Manager::NUMBER,
+				'min' => 5,
+				'max' => 100,
+				'step' => 1,
+				'default' => 20,
+                'selectors' => [
+                    '{{WRAPPER}} .mh-post-slider .slick-prev::before,{{WRAPPER}}  .mh-post-slider .slick-next::before' => 'font-size: {{value}}px'
+                ],
+			]
+		);
         $this->add_control(
             'navarrow_bg_color',
             [
@@ -227,7 +243,7 @@ class MH_Post_Slider_Widget extends Widget_Base {
                 'type' => Controls_Manager::COLOR,
                 'default' => 'lightgray',
                 'selectors' => [
-                    '{{WRAPPER}} .mh-post-slider .slick-prev,.mh-post-slider .slick-next' => 'background-color: {{value}};',
+                    '{{WRAPPER}} .mh-post-slider .slick-prev,{{WRAPPER}}  .mh-post-slider .slick-next' => 'background-color: {{value}};',
                 ],
             ]
         );
@@ -240,7 +256,7 @@ class MH_Post_Slider_Widget extends Widget_Base {
                 'default' => 20,
     
                 'selectors' => [
-                    '{{WRAPPER}} .mh-post-slider .slick-prev:before,.mh-post-slider .slick-next:before' => 'font-size: {{size}}px;', // Adjust the selector to target your widget's elements
+                    '{{WRAPPER}} .mh-post-slider .slick-prev:before,{{WRAPPER}}  .mh-post-slider .slick-next:before' => 'font-size: {{size}}px;', // Adjust the selector to target your widget's elements
                 ],
             ]
         );
@@ -260,7 +276,7 @@ class MH_Post_Slider_Widget extends Widget_Base {
                 ],
     
                 'selectors' => [
-                    '{{WRAPPER}} .mh-post-slider .slick-prev,.mh-post-slider .slick-next' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};', // Adjust the selector to target your widget's elements
+                    '{{WRAPPER}}  .mh-post-slider .slick-prev,{{WRAPPER}}  .mh-post-slider .slick-next' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};', // Adjust the selector to target your widget's elements
                 ],
             ]
         );
@@ -272,6 +288,9 @@ class MH_Post_Slider_Widget extends Widget_Base {
                 'label' => __('Dots Color', 'mhds-plug'),
                 'type' => Controls_Manager::COLOR,
                 'default' => '#000',
+                'selectors' => [
+                    '{{WRAPPER}} .slick-dots li.slick-active button:before' => 'color: {{value}}',
+                ]
                 
             ]
         );
@@ -281,8 +300,9 @@ class MH_Post_Slider_Widget extends Widget_Base {
                 'label' => __( 'Dots size', 'mhds-plug' ),
                 'type' => Controls_Manager::NUMBER,
                 'default' => 10,
-    
-                
+                'selectors' =>[
+                    '{{WRAPPER}} .slick-dots li button:before' => 'font-size: {{value}}px',
+                ]
             ]
         );
 
@@ -389,21 +409,12 @@ class MH_Post_Slider_Widget extends Widget_Base {
     <?php endwhile; ?>
 </div>
 <style>
-    .mh-post-slider .slick-prev::before,.mh-post-slider .slick-next::before {
-    font-size: 20px;
-    
-    color: <?php echo $settings['navarrow_color'];?>;
-}
+
 .slick-slider .mh-slider-item-body{
     padding: 15px;
 }
-.slick-dots li button:before{
-    font-size: <?php echo $settings['dots_size'];?>px;
 
-}
-.slick-dots li.slick-active button:before{
-    color: <?php echo $settings['dots_color'];?>;
-}
+
 </style>
 <script>
     jQuery(document).ready(function ($) {
